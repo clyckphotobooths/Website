@@ -15,7 +15,6 @@ assets/vendor/              gsap, ScrollTrigger, lenis (lokaal, geen CDN)
 assets/img/                 de foto's uit het PDF-materiaal, gecorrigeerd naar één grade
 assets/gen/                 drie sfeerbeelden (doka, bokeh, gordijn)
 assets/logo/                het logo, met transparante achtergrond (inkt + wit)
-design/                     COMMIT-SHEET.md, STORYBOARD.md, DESIGN.md, screenshots
 ```
 
 ## Publiceren
@@ -39,8 +38,7 @@ Paden zijn relatief, dus de site werkt in een submap (`/clyck/`) net zo goed als
    velden voorgevuld. Wil je een echte inzending (of een kopie in een mailbox/CRM), koppel dan een
    formulierendpoint en vervang het `window.location.href = href`-blok in `main.js`.
 4. **Foto's** — het aangeleverde materiaal is 360–1229 px breed (telefoonfoto's). Op een groot scherm is de
-   hero zacht; nieuwe foto's op 2560 px breed maken de site aanzienlijk scherper. De grade staat in
-   `design/DESIGN.md` zodat nieuwe beelden dezelfde look krijgen.
+   hero zacht; nieuwe foto's op 2560 px breed maken de site aanzienlijk scherper.
 5. **Prijzen** — €450 / €550 / €325 excl. btw komen uit het aanleverdocument. Pas ze aan in `#opties`
    (en in de keuzelijst "Gewenste uitvoering" in het formulier).
 

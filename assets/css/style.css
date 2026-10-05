@@ -1,6 +1,6 @@
 /* ==========================================================================
    CLYCK Photobooths — style.css
-   Register: cinematic (direct). Style contract: design/COMMIT-SHEET.md
+  Register: cinematic (direct).
    Rules that hold everywhere in this file:
    · colour is OKLCH; the page is paper (mean L ≈ 0.95), the accent is dokarood
    · only transform / opacity / clip-path-free masks are animated
