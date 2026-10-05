@@ -1,0 +1,620 @@
+/* ==========================================================================
+   CLYCK Photobooths — style.css
+   Register: cinematic (direct). Style contract: design/COMMIT-SHEET.md
+   Rules that hold everywhere in this file:
+   · colour is OKLCH; the page is paper (mean L ≈ 0.95), the accent is dokarood
+   · only transform / opacity / clip-path-free masks are animated
+   · every hover is gated behind (hover:hover) and (pointer:fine)
+   · reveals enhance an already-visible default — with JS off nothing is hidden
+   ========================================================================== */
+
+/* --- fonts (self-hosted, OFL — see assets/fonts/fonts.css) ---------------- */
+@import url("../fonts/fonts.css");
+
+/* --- 1. tokens ----------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* surface + ink */
+  --paper: oklch(0.968 0.005 35);      /* the print */
+  --paper-2: oklch(0.938 0.007 35);    /* banded section ground */
+  --ink: oklch(0.19 0.012 35);         /* the logo's black, one tick warm */
+  --ink-2: oklch(0.42 0.012 35);       /* secondary text — 6.7:1 on paper */
+  --hairline: oklch(0.19 0.012 35 / 0.14);
+  --hairline-strong: oklch(0.19 0.012 35 / 0.26);
+
+  /* light */
+  --safelight: oklch(0.52 0.185 27);   /* accent — darkroom safelight red */
+  --safelight-ink: oklch(0.44 0.17 27);
+  --curtain: oklch(0.31 0.105 22);     /* the closed booth's velvet */
+  --curtain-deep: oklch(0.22 0.075 22);
+  --night: oklch(0.17 0.035 25);       /* the darkroom */
+  --print: oklch(0.97 0.004 30);       /* paper under safelight */
+
+  /* type */
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --text: "Newsreader", Georgia, "Times New Roman", serif;
+
+  --step--1: clamp(0.78rem, 0.75rem + 0.14vw, 0.86rem);
+  --step-0: clamp(1.06rem, 1rem + 0.28vw, 1.22rem);
+  --step-1: clamp(1.24rem, 1.12rem + 0.5vw, 1.55rem);
+  --step-2: clamp(1.5rem, 1.28rem + 0.95vw, 2.1rem);
+  --step-3: clamp(1.85rem, 1.45rem + 1.7vw, 2.9rem);
+  --step-4: clamp(2.3rem, 1.6rem + 2.9vw, 4rem);
+  --step-5: clamp(2.7rem, 1.5rem + 5vw, 5.6rem);
+
+  /* space — deliberately unequal: the film breathes around the peak */
+  --s-1: 0.5rem;  --s-2: 0.85rem;  --s-3: 1.35rem;  --s-4: 2.1rem;
+  --s-5: 3.4rem;  --s-6: 5.6rem;   --s-7: 8.5rem;   --s-8: 12rem;
+
+  --gutter: clamp(1.15rem, 4vw, 4.5rem);
+  --measure: 66ch;
+
+  /* motion */
+  --ease-out-quart: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* layer scale */
+  --z-grain: 60; --z-nav: 40; --z-strip: 20;
+}
+
+/* --- 2. reset-ish -------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  font-optical-sizing: auto;
+  overflow-x: clip;
+}
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 114%;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  text-wrap: balance;
+  margin: 0;
+}
+p { margin: 0; text-wrap: pretty; }
+/* `height: auto` beats the presentational height from the img height="" attribute,
+   without which every aspect-ratio rule below is silently ignored. */
+img, picture, svg { display: block; max-width: 100%; height: auto; }
+/* Flex/grid items that hold a photo must be allowed to shrink below the image's
+   intrinsic width, otherwise the track is sized by the photo and overflows. */
+.strip__frame, .print__frames > *, .opt__figure, .band__item, .bag__figure,
+.hero__strip, .print__out, .print__paper, .morning__head > * { min-width: 0; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:where(a, button, summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--safelight);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+::selection { background: oklch(0.52 0.185 27 / 0.22); }
+
+/* --- 3. primitives ------------------------------------------------------- */
+.wrap { width: min(1220px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.wrap-narrow { width: min(880px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.lead { font-size: var(--step-1); line-height: 1.45; color: var(--ink-2); max-width: 56ch; }
+.prose { max-width: var(--measure); }
+.rule { border: 0; border-top: 1px solid var(--hairline); margin: 0; }
+.label {
+  font-family: var(--display);
+  font-weight: 600;
+  font-stretch: 100%;
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.num { font-variant-numeric: tabular-nums; }
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 90;
+  background: var(--ink); color: var(--paper); padding: 0.7rem 1.1rem;
+}
+.skip:focus { left: var(--gutter); top: var(--s-2); }
+
+/* grain: one fixed, non-animating pass, and no mix-blend-mode — a full-viewport
+   blend is a whole-frame pass on every painted frame (measured: ~20 fps at 4x CPU). */
+.grain {
+  position: fixed; inset: 0; z-index: var(--z-grain);
+  pointer-events: none; opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* buttons — the only element allowed to be a pill */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--display); font-weight: 700; font-stretch: 104%;
+  font-size: var(--step--1); letter-spacing: 0.02em; text-transform: uppercase;
+  padding: 0.95rem 1.5rem; border-radius: 999px;
+  text-decoration: none; border: 1px solid transparent; cursor: pointer;
+  transition: background-color 140ms var(--ease-out-quart),
+              color 140ms var(--ease-out-quart),
+              border-color 140ms var(--ease-out-quart),
+              transform 140ms var(--ease-out-quart);
+}
+.btn--solid { background: var(--safelight); color: oklch(0.99 0.005 30); }
+.btn--ghost { border-color: var(--hairline-strong); color: var(--ink); background: transparent; }
+.btn--night { background: var(--print); color: var(--ink); }
+.btn--sm { padding: 0.62rem 1.05rem; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+@media (hover: hover) and (pointer: fine) {
+  .btn--solid:hover { background: var(--safelight-ink); }
+  .btn--ghost:hover { border-color: var(--ink); background: oklch(0.19 0.012 35 / 0.05); }
+  .btn--night:hover { background: var(--paper); }
+}
+.btn:active { transform: scale(0.975); }
+
+/* the filmstrip motif — square frames, hairline border, as in the logo mark */
+.strip { display: flex; flex-direction: column; gap: 10px; margin: 0; }
+.strip__frame {
+  position: relative; flex: 1; overflow: hidden;
+  border: 1.5px solid var(--ink); background: var(--paper);
+  aspect-ratio: 1; margin: 0;
+}
+.strip__frame img { width: 100%; height: 100%; object-fit: cover; }
+/* perforations echo the logo's sprocket edge */
+.strip--holed .strip__frame::after {
+  content: ""; position: absolute; inset: 4px;
+  border: 1px dashed oklch(1 0 0 / 0.5); pointer-events: none; opacity: 0;
+}
+
+/* --- 4. navigation — deliberately not a status bar ---------------------- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: var(--z-nav);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-3);
+  padding: 0.7rem var(--gutter);
+  background: oklch(0.968 0.005 35 / 0.86);
+  backdrop-filter: blur(9px) saturate(1.1);
+  border-bottom: 1px solid transparent;
+  transform: translateY(-101%);
+  transition: transform 380ms var(--ease-drawer), border-color 380ms linear;
+}
+.nav.is-in { transform: translateY(0); border-color: var(--hairline); }
+.nav__logo img { width: 118px; height: auto; }
+.nav__links { display: none; gap: var(--s-4); }
+.nav__links a {
+  font-family: var(--display); font-weight: 500; font-size: var(--step--1);
+  text-decoration: none; color: var(--ink-2); position: relative;
+  transition: color 140ms var(--ease-out-quart);
+}
+.nav__links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px;
+  background: var(--safelight); transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 220ms var(--ease-out-quart);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav__links a:hover { color: var(--ink); }
+  .nav__links a:hover::after { transform: scaleX(1); }
+}
+.nav__cta { white-space: nowrap; }
+@media (min-width: 900px) {
+  .nav { padding-block: 0.85rem; }
+  .nav__logo img { width: 138px; }
+  .nav__links { display: flex; }
+}
+
+/* --- 5. scene 1 — de avond (hero) --------------------------------------- */
+.hero {
+  position: relative;
+  display: grid; align-content: end;
+  min-height: 88svh;
+  padding-block: var(--s-6) clamp(3.5rem, 8vw, 6.5rem);
+  isolation: isolate;
+  overflow: clip;
+}
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: 62% 45%;
+  transform: scale(1.04);
+  will-change: transform;
+}
+.hero__scrim {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(105deg, oklch(0.17 0.035 25 / 0.94) 0%, oklch(0.17 0.035 25 / 0.8) 42%, oklch(0.17 0.035 25 / 0.32) 78%, oklch(0.17 0.035 25 / 0.55) 100%),
+    linear-gradient(to top, oklch(0.17 0.035 25 / 0.9), transparent 55%);
+}
+/* letterbox: the frame of the film, not fixed bars (opens from 0 via transform) */
+.hero__bar {
+  position: absolute; left: 0; right: 0; height: 6svh;
+  background: var(--night); z-index: 2; transform-origin: top;
+}
+.hero__bar--top { top: 0; }
+.hero__bar--bottom { bottom: 0; transform-origin: bottom; }
+.js .hero__bar { transform: scaleY(0); }
+.hero__grid {
+  display: grid; gap: var(--s-5); align-items: end;
+  grid-template-columns: 1fr;
+}
+.hero__copy { color: var(--print); max-width: min(48rem, 100%); }
+.hero__copy h1 { font-size: var(--step-4); color: var(--print); max-width: 16ch; }
+.hero__copy h1 em {
+  font-family: var(--text); font-style: italic; font-weight: 400;
+  font-stretch: 100%; letter-spacing: -0.01em;
+}
+.hero__copy .lead { color: oklch(0.97 0.004 30 / 0.84); max-width: 40ch; margin-top: var(--s-3); }
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-4); }
+.hero__meta {
+  margin-top: var(--s-3); font-size: var(--step--1); color: oklch(0.97 0.004 30 / 0.72);
+  font-family: var(--display); font-weight: 400; letter-spacing: 0.01em;
+}
+.hero .btn--solid { color: oklch(0.99 0.005 30); }
+.hero .btn--ghost { border-color: oklch(0.97 0.004 30 / 0.4); color: var(--print); }
+@media (hover: hover) and (pointer: fine) {
+  .hero .btn--ghost:hover { border-color: var(--print); background: oklch(0.97 0.004 30 / 0.1); }
+}
+
+/* the strip hangs over the hero's bottom edge and crosses into the next band */
+.hero__strip {
+  position: absolute;
+  top: 0;
+  right: var(--gutter);
+  width: clamp(112px, 15vw, 176px);
+  height: calc(100% + 7.5rem);
+  z-index: var(--z-strip);
+  filter: drop-shadow(0 14px 24px oklch(0.1 0.02 25 / 0.45));
+}
+.hero__strip .strip { height: 100%; }
+.hero__strip .strip__frame { background: oklch(0.99 0.003 30); }
+.hero__peg {
+  position: absolute; top: 0; left: 50%; transform: translate(-50%, -40%);
+  width: 46px; height: 12px; background: var(--ink); border-radius: 2px;
+}
+/* on a phone the strip cannot hang beside the type, so it turns horizontal
+   (the logo's own filmstrip) and rides above the headline */
+@media (max-width: 899px) {
+  .hero { min-height: 94svh; }
+  .hero__strip {
+    position: static; order: -1; width: auto; height: auto;
+    margin: 0 var(--gutter) var(--s-4);
+    filter: drop-shadow(0 10px 18px oklch(0.1 0.02 25 / 0.45));
+  }
+  .hero__strip .strip { flex-direction: row; gap: 8px; height: auto; }
+  .hero__strip .strip__frame { aspect-ratio: 1; }
+  .hero__peg { display: none; }
+}
+
+/* --- 6. scene 2 — wat er in de tas zit ---------------------------------- */
+.bag { padding-block: clamp(4.5rem, 10vw, 9rem) clamp(3rem, 7vw, 6rem); background: var(--paper); }
+.bag__grid { display: grid; gap: var(--s-6); grid-template-columns: 1fr; align-items: start; }
+.bag__head { max-width: min(38rem, 100%); }
+.bag__head h2 { font-size: var(--step-4); max-width: 16ch; }
+.bag__head h2 span { font-family: var(--text); font-style: italic; font-weight: 400; }
+.bag__head .prose { margin-top: var(--s-3); color: var(--ink-2); }
+.bag__list { margin: var(--s-5) 0 0; padding: 0; list-style: none; max-width: min(34rem, 100%); }
+.bag__list li {
+  display: grid; grid-template-columns: 1.4rem 1fr; gap: var(--s-3);
+  padding-block: var(--s-3); border-top: 1px solid var(--hairline);
+  font-size: var(--step-0);
+}
+.bag__list li:last-child { border-bottom: 1px solid var(--hairline); }
+.bag__list b { font-family: var(--display); font-weight: 700; font-stretch: 108%; display: block; }
+.bag__list span { color: var(--ink-2); font-size: 0.96em; }
+.bag__dot { width: 9px; height: 9px; margin-top: 0.55em; border-radius: 50%; background: var(--safelight); }
+.bag__figure { margin: 0; position: relative; }
+.bag__figure img { width: 100%; aspect-ratio: 3 / 5; object-fit: cover; object-position: 50% 35%; }
+.bag__figure figcaption {
+  margin-top: var(--s-2); font-family: var(--display); font-weight: 400;
+  font-size: var(--step--1); color: var(--ink-2); max-width: 30ch;
+}
+@media (min-width: 860px) {
+  .bag__grid { grid-template-columns: 1.05fr 0.72fr; gap: clamp(3rem, 7vw, 7rem); }
+}
+
+/* --- 7. scene 3 — drie opties, één prijslijst --------------------------- */
+.options { padding-block: clamp(3rem, 6vw, 5.5rem) clamp(4rem, 9vw, 8rem); background: var(--paper-2); }
+.options__head { padding-bottom: var(--s-4); border-bottom: 1px solid var(--hairline-strong); }
+.options__head h2 { font-size: var(--step-3); max-width: 22ch; }
+.options__head p { margin-top: var(--s-2); color: var(--ink-2); max-width: 52ch; }
+.opt {
+  display: grid; gap: var(--s-4);
+  padding-block: clamp(2.4rem, 5vw, 4.2rem);
+  border-bottom: 1px solid var(--hairline);
+  grid-template-columns: 1fr;
+}
+.opt__no {
+  font-family: var(--display); font-weight: 800; font-stretch: 118%;
+  font-size: var(--step-1); color: var(--safelight-ink); letter-spacing: 0.01em;
+}
+.opt__body h3 { font-size: var(--step-2); margin-top: var(--s-1); }
+.opt__for { margin-top: var(--s-2); color: var(--ink-2); max-width: min(38rem, 100%); }
+.opt__for b { color: var(--ink); font-family: var(--display); font-weight: 600; }
+.opt__specs { margin: var(--s-3) 0 0; padding: 0; list-style: none; columns: 2; column-gap: var(--s-4); }
+.opt__specs li { break-inside: avoid; padding-left: 1rem; position: relative; font-size: 0.97em; color: var(--ink-2); }
+.opt__specs li::before {
+  content: ""; position: absolute; left: 0; top: 0.68em;
+  width: 6px; height: 6px; background: var(--ink); transform: rotate(45deg);
+}
+.opt__specs li.warn::before { background: var(--safelight); }
+.opt__foot {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-3);
+  margin-top: var(--s-4); padding-top: var(--s-3); border-top: 1px solid var(--hairline);
+}
+.opt__price {
+  font-family: var(--display); font-weight: 800; font-stretch: 118%;
+  font-size: var(--step-2); letter-spacing: -0.01em;
+}
+.opt__price small { font-size: 0.42em; font-weight: 500; color: var(--ink-2); letter-spacing: 0.04em; }
+.opt__status {
+  font-family: var(--display); font-size: var(--step--1); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--safelight-ink);
+}
+.opt__figure { margin: 0; overflow: hidden; }
+.opt__figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.opt__figure--render img { object-fit: contain; background: oklch(0.9 0.004 35); aspect-ratio: 4 / 3.4; }
+@media (min-width: 900px) {
+  .opt {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 6vw, 6rem); align-items: center;
+  }
+  .opt:nth-of-type(even) { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+  .opt:nth-of-type(even) .opt__figure { order: 2; }
+}
+.price-note {
+  display: grid; gap: var(--s-2); margin-top: var(--s-4);
+  font-size: var(--step--1); color: var(--ink-2);
+}
+.price-note b { color: var(--ink); }
+
+/* --- 8. scene 4 — DE PRINT (peak; pinned, scroll-scrubbed) --------------- */
+.print { position: relative; background: var(--night); color: var(--print); height: 320vh; }
+.print__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.print__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+.print__bg-veil {
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 90% at 22% 40%, transparent 0%, oklch(0.12 0.03 25 / 0.72) 70%),
+              linear-gradient(to right, oklch(0.12 0.03 25 / 0.55), oklch(0.12 0.03 25 / 0.85));
+}
+.print__stage {
+  position: relative; height: 100%;
+  display: grid; grid-template-rows: auto 1fr;
+  gap: var(--s-2);
+}
+.print__slotrow { position: relative; margin-top: clamp(9svh, 14svh, 20svh); padding-inline: var(--gutter); }
+.print__slot {
+  display: flex; align-items: center; gap: var(--s-2);
+  width: min(880px, 100% - 2 * var(--gutter)); margin-inline: auto;
+}
+.print__led {
+  width: 10px; height: 10px; border-radius: 50%; flex: none;
+  background: var(--safelight); box-shadow: 0 0 12px 2px oklch(0.52 0.185 27 / 0.7);
+}
+.print__slot-bar {
+  position: relative; height: 22px; flex: 1; border-radius: 3px;
+  background: linear-gradient(to bottom, oklch(0.34 0.01 25), oklch(0.14 0.01 25) 60%, oklch(0.3 0.01 25));
+  box-shadow: inset 0 1px 0 oklch(0.5 0.01 25 / 0.5), 0 10px 22px oklch(0.05 0 0 / 0.6);
+}
+.print__slot-bar::after {
+  content: ""; position: absolute; left: 12px; right: 12px; top: 9px; height: 4px;
+  background: oklch(0.07 0.01 25); border-radius: 2px;
+  box-shadow: inset 0 2px 3px oklch(0 0 0 / 0.9);
+}
+/* the window the paper emerges into: clipped at the slot, open at the bottom */
+.print__out {
+  position: relative; overflow: hidden;
+  width: min(880px, 100% - 2 * var(--gutter));
+  margin: 0 auto; height: calc(100svh - clamp(9svh, 14svh, 20svh) - 1.6rem);
+  perspective: 1400px;
+}
+.print__paper {
+  position: absolute; inset: 0 0 auto 0;
+  transform-origin: 50% 0;
+  background: linear-gradient(178deg, oklch(0.985 0.004 30), oklch(0.955 0.008 30));
+  padding: clamp(0.8rem, 1.6vw, 1.5rem);
+  box-shadow: 0 26px 60px oklch(0.06 0.02 25 / 0.7);
+  display: grid; grid-template-rows: 1fr auto; gap: clamp(0.6rem, 1.4vw, 1.2rem);
+}
+/* JS owns the "not yet printed" state (transform set by the timeline);
+   without JS the print is simply there. */
+.print__frames { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.5rem, 1.3vw, 1.1rem); }
+.print__frame {
+  position: relative; overflow: hidden; margin: 0;
+  background: oklch(0.9 0.006 30);
+  aspect-ratio: 1;
+}
+.print__frame img { width: 100%; height: 100%; object-fit: cover; }
+/* the cover slides up = the photo "develops"; pure transform.
+   Default (no JS, reduced motion) = already developed. */
+.print__cover {
+  position: absolute; inset: 0; background: oklch(0.99 0.003 30);
+  transform: translateY(-101%);
+}
+.js .print__cover { transform: translateY(0); will-change: transform; }
+.print__sign {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-2);
+  font-family: var(--display); font-size: var(--step--1);
+  color: var(--ink); padding-inline: 0.2rem;
+}
+.print__sign img { width: 96px; height: auto; }
+.print__sign span { color: var(--ink-2); font-weight: 500; letter-spacing: 0.04em; }
+.print__copy {
+  position: absolute; left: var(--gutter); bottom: clamp(2rem, 8svh, 6rem);
+  max-width: min(34rem, 42vw); z-index: 3;
+}
+.print__copy h2 { font-size: var(--step-4); color: var(--print); }
+.print__copy h2 em { font-family: var(--text); font-style: italic; font-weight: 400; }
+.print__copy p { margin-top: var(--s-2); color: oklch(0.97 0.004 30 / 0.8); font-size: var(--step-0); max-width: 34ch; }
+.print__flourish {
+  position: absolute; right: var(--gutter); top: 50%; z-index: 3;
+  writing-mode: vertical-rl; font-family: var(--display); font-size: var(--step--1);
+  color: oklch(0.97 0.004 30 / 0.55); letter-spacing: 0.14em; text-transform: uppercase;
+}
+@media (max-width: 899px) {
+  .print { height: 260vh; }
+  .print__copy { max-width: none; left: var(--gutter); right: var(--gutter); bottom: clamp(1.2rem, 5svh, 3rem); }
+  .print__copy h2 { font-size: var(--step-3); }
+  .print__flourish { display: none; }
+  .print__frames { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* --- 9. scene 5 — de volgende ochtend ----------------------------------- */
+.morning { padding-block: clamp(4rem, 9vw, 8rem) clamp(3rem, 7vw, 6rem); background: var(--paper); }
+.morning__head { display: grid; gap: var(--s-3); grid-template-columns: 1fr; align-items: end; }
+.morning__head h2 { font-size: var(--step-3); max-width: 26ch; }
+.morning__head p { color: var(--ink-2); max-width: 44ch; }
+.band { position: relative; margin-top: var(--s-6); padding-block: var(--s-6); overflow: clip; }
+.band__bg { position: absolute; inset: 0; z-index: 0; }
+.band__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+.band__bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, var(--paper) 0%, transparent 16%, transparent 84%, var(--paper) 100%);
+}
+.band__row { position: relative; z-index: 1; display: flex; gap: var(--s-3); width: max-content; padding-inline: var(--gutter); }
+.band__item { margin: 0; width: clamp(190px, 26vw, 330px); }
+.band__item img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; will-change: transform; }
+.band__item:nth-child(2) img { aspect-ratio: 4 / 3.4; }
+.band__item:nth-child(3) img { aspect-ratio: 4 / 5.6; }
+.band__item figcaption {
+  margin-top: var(--s-2); font-family: var(--display); font-size: var(--step--1);
+  color: var(--ink-2); font-weight: 400;
+}
+.morning__facts { display: grid; gap: var(--s-4); margin-top: var(--s-5); grid-template-columns: 1fr; }
+.morning__fact { padding-top: var(--s-3); border-top: 1px solid var(--hairline-strong); }
+.morning__fact b { font-family: var(--display); font-weight: 700; font-stretch: 110%; display: block; font-size: var(--step-1); }
+.morning__fact span { color: var(--ink-2); display: block; margin-top: 0.35rem; font-size: 0.98em; }
+@media (min-width: 780px) {
+  .morning__head { grid-template-columns: 1.2fr 0.8fr; }
+  .morning__facts { grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+}
+
+/* --- 10. scene 6 — gala's, privacy en vragen ---------------------------- */
+.gala { position: relative; padding-block: clamp(4rem, 9vw, 8rem); background: var(--curtain-deep); color: var(--print); overflow: clip; }
+.gala__bg { position: absolute; inset: 0; opacity: 0.4; }
+.gala__bg img { width: 100%; height: 100%; object-fit: cover; }
+.gala__grid { position: relative; display: grid; gap: var(--s-5); grid-template-columns: 1fr; }
+.gala__note { max-width: min(24rem, 100%); }
+.gala__note .label { color: oklch(0.97 0.004 30 / 0.7); }
+.gala__note h2 { font-size: var(--step-3); color: var(--print); margin-top: var(--s-2); }
+.gala__body { max-width: min(46rem, 100%); }
+.gala__body p { color: oklch(0.97 0.004 30 / 0.82); }
+.gala__body p + p { margin-top: var(--s-3); }
+.gala__body .label { color: oklch(0.97 0.004 30 / 0.62); display: block; margin-bottom: var(--s-2); }
+.faq { position: relative; margin-top: var(--s-6); border-top: 1px solid oklch(0.97 0.004 30 / 0.22); }
+.faq details { border-bottom: 1px solid oklch(0.97 0.004 30 / 0.22); interpolate-size: allow-keywords; }
+.faq summary {
+  display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center;
+  padding-block: var(--s-3); cursor: pointer; list-style: none;
+  font-family: var(--display); font-weight: 700; font-stretch: 108%; font-size: var(--step-1);
+  transition: color 140ms var(--ease-out-quart);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: ""; width: 12px; height: 12px; border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 240ms var(--ease-out-quart);
+}
+.faq details[open] summary::after { transform: rotate(225deg) translate(-2px, -2px); }
+.faq__answer { padding-bottom: var(--s-3); max-width: 62ch; color: oklch(0.97 0.004 30 / 0.82); }
+.faq details::details-content {
+  block-size: 0; overflow: hidden;
+  transition: block-size 280ms var(--ease-out-quart), content-visibility 280ms allow-discrete;
+}
+.faq details[open]::details-content { block-size: auto; }
+@media (hover: hover) and (pointer: fine) {
+  .faq summary:hover { color: var(--safelight); }
+}
+@media (min-width: 860px) {
+  .gala__grid { grid-template-columns: 0.5fr 1fr; gap: clamp(3rem, 8vw, 8rem); }
+}
+
+/* --- 11. scene 7 — vraag een datum aan (de deur) ------------------------ */
+.door { position: relative; background: var(--curtain); color: var(--print); padding-block: clamp(4.5rem, 10vw, 9rem); overflow: clip; }
+.door__bg { position: absolute; inset: 0; opacity: 0.22; }
+.door__bg img { width: 100%; height: 100%; object-fit: cover; }
+.door__inner { position: relative; }
+.door__head { text-align: center; max-width: min(34rem, 100%); margin-inline: auto; }
+.door__head h2 { font-size: var(--step-4); color: var(--print); }
+.door__head p { margin-top: var(--s-3); color: oklch(0.97 0.004 30 / 0.85); }
+.form { margin-top: var(--s-6); display: grid; gap: var(--s-3); grid-template-columns: 1fr; }
+.field { display: grid; gap: 0.45rem; }
+.field label {
+  font-family: var(--display); font-size: var(--step--1); font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; color: oklch(0.97 0.004 30 / 0.8);
+}
+.field :is(input, select, textarea) {
+  font-family: var(--text); font-size: var(--step-0);
+  padding: 0.8rem 0.9rem; background: oklch(0.97 0.004 30 / 0.07);
+  color: var(--print); border: 1px solid oklch(0.97 0.004 30 / 0.3); border-radius: 2px;
+  transition: border-color 140ms var(--ease-out-quart), background-color 140ms var(--ease-out-quart);
+}
+.field textarea { min-height: 7rem; resize: vertical; }
+.field ::placeholder { color: oklch(0.97 0.004 30 / 0.72); }
+.field :is(input, select, textarea):focus { background: oklch(0.97 0.004 30 / 0.12); border-color: var(--print); }
+.field select option { color: var(--ink); background: var(--paper); }
+.field__error { font-size: var(--step--1); color: oklch(0.85 0.09 30); min-height: 1.1em; }
+.field[data-invalid] :is(input, select, textarea) { border-color: oklch(0.85 0.09 30); }
+.form__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+.form__status { font-family: var(--display); font-size: var(--step--1); color: oklch(0.97 0.004 30 / 0.85); }
+.door__direct { margin-top: var(--s-5); display: grid; gap: var(--s-3); text-align: center; }
+.door__direct a { text-decoration: none; font-family: var(--display); font-weight: 600; }
+.door__direct a:hover { text-decoration: underline; }
+.door__direct .label { color: oklch(0.97 0.004 30 / 0.7); }
+@media (min-width: 760px) {
+  .form { grid-template-columns: 1fr 1fr; gap: var(--s-3) var(--s-4); }
+  .field--wide { grid-column: 1 / -1; }
+  .door__direct { grid-template-columns: repeat(2, auto); justify-content: center; gap: var(--s-6); }
+}
+
+/* --- 12. footer --------------------------------------------------------- */
+.foot { background: var(--night); color: var(--print); padding-block: clamp(3rem, 7vw, 5.5rem) var(--s-4); }
+.foot__grid { display: grid; gap: var(--s-5); grid-template-columns: 1fr; }
+.foot__logo img { width: 150px; height: auto; }
+.foot__col h3 {
+  font-size: var(--step--1); font-family: var(--display); font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.97 0.004 30 / 0.6);
+}
+.foot__col ul { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: grid; gap: 0.5rem; }
+.foot__col a, .foot__col p { color: oklch(0.97 0.004 30 / 0.88); text-decoration: none; font-size: 0.98em; }
+.foot__col a:hover { text-decoration: underline; }
+.foot__legal {
+  margin-top: var(--s-6); padding-top: var(--s-3); border-top: 1px solid oklch(0.97 0.004 30 / 0.18);
+  display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: space-between;
+  font-family: var(--display); font-size: var(--step--1); color: oklch(0.97 0.004 30 / 0.6);
+}
+@media (min-width: 820px) { .foot__grid { grid-template-columns: 1.2fr 1fr 1fr 1fr; } }
+
+/* --- 13. entrance system (JS adds .js on <html>; without it, all visible) */
+.js [data-reveal] { opacity: 0; }
+.js [data-reveal-img] { transform: scale(1.045); }
+.js [data-reveal-mask] > * { transform: translateY(105%); }
+.js [data-reveal-mask] { overflow: hidden; }
+.js [data-reveal-wipe] { clip-path: inset(0 100% 0 0); }
+
+/* --- 14. no-JS and reduced motion: the static cut of the same film ------- */
+.no-js .print { height: auto; }
+.no-js .print__sticky { position: static; height: auto; padding-block: var(--s-6); }
+.no-js .print__stage { grid-template-rows: auto auto; }
+.no-js .print__out { height: auto; overflow: visible; }
+.no-js .print__paper { position: static; }
+/* relative (not static): a static element cannot carry z-index, so it would
+   paint underneath the absolutely positioned darkroom veil */
+.no-js .print__copy { position: relative; z-index: 3; max-width: none; margin-top: var(--s-5); }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ease-out-quart: ease; --ease-drawer: ease; }
+  .js [data-reveal], .js [data-reveal-img], .js [data-reveal-mask] > * { opacity: 1; transform: none; }
+  .js [data-reveal-wipe] { clip-path: none; }
+  .js .hero__bar { transform: scaleY(1); }
+  .hero__media img { transform: none; }
+  .print { height: auto; }
+  .print__sticky { position: static; height: auto; padding-block: var(--s-6); }
+  .print__stage { grid-template-rows: auto auto; }
+  .print__out { height: auto; overflow: visible; }
+  .print__paper, .js .print__paper { position: static; transform: none; }
+  .print__cover, .js .print__cover { transform: translateY(-101%); }
+  .print__copy { position: relative; z-index: 3; max-width: none; margin-top: var(--s-5); }
+  .print__copy h2, .print__copy p { opacity: 1; }
+  .band__item img { transform: none !important; }
+  .nav { transition: none; }
+}
+@media print { .nav, .grain { display: none; } }

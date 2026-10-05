@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="nl" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLYCK Photobooths — photobooth verhuur voor studentenfeesten, bruiloften en bedrijfsfeesten</title>
+<meta name="description" content="CLYCK zet een photobooth op je feest: onbeperkt printen, fotostrips in jouw eigen ontwerp en alle foto's na afloop online. Drie uitvoeringen, vanaf €325,- excl. btw.">
+<meta name="theme-color" content="#f6f3f1">
+<meta property="og:title" content="CLYCK Photobooths">
+<meta property="og:description" content="Onbeperkt printen, strips in jouw eigen stijl, alle foto's na afloop online.">
+<meta property="og:image" content="assets/img/hero-partij.webp">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/logo/favicon.png">
+<link rel="preload" as="image" href="assets/img/hero-partij.webp" fetchpriority="high">
+<script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Naar de inhoud</a>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============================= navigatie =============================
+     Geen statusbalk: de hero bezit de bovenrand. De navigatie komt pas
+     terug zodra je de hero voorbij bent. -->
+<header class="nav" id="nav">
+  <a class="nav__logo" href="#top" aria-label="CLYCK Photobooths — naar boven">
+    <img src="assets/logo/clyck-ink.webp" alt="CLYCK Photobooths" width="340" height="137">
+    </a>
+  <nav class="nav__links" aria-label="Hoofdnavigatie">
+    <a href="#zo-werkt-het">Zo werkt het</a>
+    <a href="#opties">Opties</a>
+    <a href="#fotos">Foto's</a>
+    <a href="#vragen">Vragen</a>
+  </nav>
+  <a class="btn btn--solid btn--sm nav__cta" href="#contact">Vraag een datum aan</a>
+</header>
+
+<main id="main">
+
+  <!-- =================== scène 1 — de avond (hook) ==================== -->
+  <section class="hero" id="top">
+    <div class="hero__media">
+      <img src="assets/img/hero-partij.webp" alt="Gasten op een tuinfeest rond een houten photobooth, tegen het vallen van de avond" width="1400" height="638" fetchpriority="high" decoding="async">
+    </div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__bar hero__bar--top" data-letterbox aria-hidden="true"></div>
+    <div class="hero__bar hero__bar--bottom" data-letterbox aria-hidden="true"></div>
+
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <h1 data-reveal-mask><span>Jouw gasten gaan naar huis met een <em>herrinering</em> in hun hand.</span></h1>
+        <p class="lead" data-reveal>Wij zetten een photobooth op je feest: onbeperkt printen, strips in jouw eigen stijl, en na afloop alle foto's in originele kwaliteit.</p>
+        <div class="hero__cta" data-reveal>
+          <a class="btn btn--solid" href="#contact">Vraag een datum aan</a>
+          <a class="btn btn--ghost" href="#opties">Bekijk de drie opties</a>
+        </div>
+        <p class="hero__meta" data-reveal>Studentenfeesten · bruiloften · bedrijfsfeesten — vanaf €325,- excl. btw</p>
+      </div>
+    </div>
+
+    <!-- de doorlopende strip: hangt van de bovenrand over de sectiegrens heen -->
+    <div class="hero__strip" aria-hidden="true">
+      <span class="hero__peg"></span>
+      <div class="strip" data-strip>
+        <figure class="strip__frame"><img src="assets/img/f-paar.webp" alt="" width="460" height="460" loading="eager" decoding="async"></figure>
+        <figure class="strip__frame"><img src="assets/img/f-groep.webp" alt="" width="460" height="460" loading="eager" decoding="async"></figure>
+        <figure class="strip__frame"><img src="assets/img/f-kast.webp" alt="" width="460" height="460" loading="eager" decoding="async"></figure>
+        <figure class="strip__frame"><img src="assets/img/f-statief.webp" alt="" width="460" height="460" loading="eager" decoding="async"></figure>
+      </div>
+    </div>
+  </section>
+
+   <!-- ============ scène 4 — DE PRINT (peak, gepind, scroll-scrub) ===== -->
+  <section class="print" id="print" aria-labelledby="print-h">
+    <div class="print__sticky">
+      <img class="print__bg" src="assets/gen/darkroom.webp" alt="" aria-hidden="true" width="1600" height="900" loading="lazy" decoding="async">
+      <div class="print__bg-veil" aria-hidden="true"></div>
+
+      <div class="print__stage">
+        <div class="print__slotrow">
+          <div class="print__slot" aria-hidden="true"><span class="print__led"></span><span class="print__slot-bar"></span></div>
+        </div>
+        <div class="print__out">
+          <div class="print__paper" id="print-paper">
+            <div class="print__frames">
+              <figure class="print__frame"><img src="assets/img/Feest1.webp" alt="Gasten bij de photobooth in een kast" width="460" height="460" loading="lazy" decoding="async"><span class="print__cover" data-cover></span></figure>
+              <figure class="print__frame"><img src="assets/img/f-groep.webp" alt="Een groep vrienden lachend in de camera" width="460" height="460" loading="lazy" decoding="async"><span class="print__cover" data-cover></span></figure>
+              <figure class="print__frame"><img src="assets/img/feest2.webp" alt="Twee gasten samen op de foto bij het tuinfeest" width="460" height="460" loading="lazy" decoding="async"><span class="print__cover" data-cover></span></figure>
+            </div>
+            <div class="print__sign">
+              <img src="assets/logo/clyck-ink.webp" alt="CLYCK Photobooths" width="340" height="137">
+              <span>eigen ontwerp</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="print__copy">
+        <h2 id="print-h" data-reveal>Van moment naar <em>tastbare</em> herinnering.</h2>
+        <p data-reveal>Direct uitgeprint, nog voordat ze terug zijn bij hun glas. De kaders krijgen een eigen ontwerp met je logo, thema of namen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== scène 2 — wat er in de tas zit (rising) =========== -->
+  <section class="bag" id="zo-werkt-het">
+    <div class="wrap bag__grid">
+      <div data-parallax-layer data-speed="0.35">
+        <div class="bag__head" data-reveal>
+          <h2>Van moment naar <span>tastbare</span> herinnering.</h2>
+          <p class="prose">Een goed feest draait om de momenten die je samen beleeft. Met de CLYCK photobooth maken we van die momenten iets dat je mee naar huis neemt.</p>
+        </div>
+        <ul class="bag__list" data-stagger>
+          <li><span class="bag__dot" aria-hidden="true"></span><span><b>Onbeperkt printen, de hele avond</b> <span>Onbeperkt printen gedurende je hele evenement. Wil je dat gasten per foto een kleine bijdrage doen, dan kan dat ook.</span></span></li>
+          <li><span class="bag__dot" aria-hidden="true"></span><span><b>Strips in jouw stijl</b> <span>Eigen ontwerp, logo, thema of sponsoring op de strip. Je kiest zelf hoeveel foto's erop komen en in welk formaat.</span></span></li>
+          <li><span class="bag__dot" aria-hidden="true"></span><span><b>De print ligt er meteen</b> <span>De strips worden direct na het nemen van de foto's uitgeprint. Geen wachtrij, geen mailtje achteraf.</span></span></li>
+          <li><span class="bag__dot" aria-hidden="true"></span><span><b>Alle foto's online</b> <span>Per evenement apart opgeslagen en na afloop in originele kwaliteit naar je toegestuurd.</span></span></li>
+          <li><span class="bag__dot" aria-hidden="true"></span><span><b>Wij bouwen op en breken af</b> <span>Geen werk of installatie voor jou. Jij wijst de plek aan, wij regelen de rest.</span></span></li>
+        </ul>
+      </div>
+      <figure class="bag__figure" data-parallax-layer data-speed="0.75" data-reveal-img>
+        <img src="assets/img/prints-in-hand.webp" alt="Hand met twee uitgeprinte fotostrips van een feest" width="560" height="933" loading="lazy" decoding="async">
+        <figcaption>Gepersonaliseerde strips, direct uitgeprint.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ scène 3 — drie opties, één prijslijst (rising) ====== -->
+  <section class="options" id="opties">
+    <div class="wrap">
+      <div class="options__head" data-reveal>
+        <h2>Drie uitvoeringen, één prijslijst.</h2>
+        <p>Welke booth past, hangt af van het aantal gasten en de sfeer van je feest. Hieronder staat per uitvoering wat je krijgt — inclusief waar een optie minder geschikt voor is.</p>
+      </div>
+
+      <article class="opt" id="prijzen" data-reveal>
+        <figure class="opt__figure" data-reveal-wipe>
+          <img src="assets/img/optie-kast.webp" alt="De photobooth in een houten kast, buiten op een veld opgesteld" width="640" height="1405" loading="lazy" decoding="async">
+        </figure>
+        <div class="opt__body">
+          <p class="opt__no">De kast</p>
+          <h3>Photobooth in een kast</h3>
+          <p class="opt__for"><b>Ideaal voor:</b> stijlvolle bruiloften, zakelijke borrels, studentengala's en grote feesten waarbij uitstraling belangrijk is.</p>
+          <ul class="opt__specs">
+            <li>Luxe uitstraling</li>
+            <li>Strakke, afgewerkte opstelling</li>
+            <li>Booth en techniek netjes geïntegreerd</li>
+            <li>Binnen en buiten inzetbaar</li>
+            <li>Bestand tegen drukke en grote evenementen</li>
+            <li>Gasten bepalen zelf hun groepsgrootte</li>
+          </ul>
+          <div class="opt__foot">
+            <span class="opt__price">vanaf €450,-<small> &nbsp;excl. btw</small></span>
+            <span class="opt__status">Direct beschikbaar</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="opt" data-reveal>
+        <figure class="opt__figure opt__figure--render" data-reveal-wipe>
+          <img src="assets/img/optie-gesloten.webp" alt="Ontwerp van de gesloten photobooth: een staande kast met een zitgedeelte dat met een gordijn wordt afgesloten" width="640" height="578" loading="lazy" decoding="async">
+        </figure>
+        <div class="opt__body">
+          <p class="opt__no">Het hokje</p>
+          <h3>Volledige gesloten photobooth</h3>
+          <p class="opt__for"><b>Ideaal voor:</b> gala's en grote evenementen binnen, waar gasten privacy willen bij het maken van de foto's.</p>
+          <ul class="opt__specs">
+            <li>De volledige photobooth-ervaring</li>
+            <li>Eyecatcher op je evenement</li>
+            <li>Privacy voor de gebruiker</li>
+            <li>Stevig en bestand tegen drukke evenementen</li>
+            <li>Er passen ongeveer vier mensen in het hokje</li>
+          </ul>
+          <div class="opt__foot">
+            <span class="opt__price">vanaf €550,-<small> &nbsp;excl. btw</small></span>
+            <span class="opt__status">In de maak — kom je in de buurt, dan denken we mee</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="opt" data-reveal>
+        <figure class="opt__figure" data-reveal-wipe>
+          <img src="assets/img/optie-statief.webp" alt="De photobooth op statief met een blauwe ringlamp tegen een witte wand" width="640" height="853" loading="lazy" decoding="async">
+        </figure>
+        <div class="opt__body">
+          <p class="opt__no">Op statief</p>
+          <h3>Photobooth op statief</h3>
+          <p class="opt__for"><b>Ideaal voor:</b> bruiloften, verjaardagen, bedrijfsfeesten en locaties waar weinig ruimte is.</p>
+          <ul class="opt__specs">
+            <li>Compact en flexibel</li>
+            <li>Moderne uitstraling</li>
+            <li>Makkelijk te plaatsen</li>
+            <li>Weinig ruimte nodig</li>
+            <li>Budgetvriendelijk</li>
+            <li class="warn">Let op: de printer staat los</li>
+            <li class="warn">Let op: minder geschikt voor drukke evenementen</li>
+          </ul>
+          <div class="opt__foot">
+            <span class="opt__price">vanaf €325,-<small> &nbsp;excl. btw</small></span>
+            <span class="opt__status">Direct beschikbaar</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="price-note" data-reveal>
+        <p><b>Alle prijzen zijn vanaf-prijzen, exclusief btw.</b> Wat er precies nodig is, hangt af van de locatie en het aantal gasten — daarover krijg je bij de aanvraag meteen duidelijkheid.</p>
+        <p>Onbeperkt printen zit bij de huur in. Kiezen jullie voor een bijdrage per foto van je gasten, dan betaal je vooraf een kleiner bedrag.</p>
+      </div>
+    </div>
+  </section>
+
+ 
+
+  <!-- ============= scène 5 — de volgende ochtend (proof) ============= -->
+  <section class="morning" id="fotos">
+    <div class="wrap morning__head">
+      <h2 data-reveal>De volgende ochtend staan ze online.</h2>
+      <p data-reveal>Alle foto's van jouw evenement, apart opgeslagen, in originele kwaliteit en digitaal naar je toegestuurd.</p>
+    </div>
+
+    <div class="band">
+      <div class="band__bg" aria-hidden="true"><img src="assets/gen/bokeh.webp" alt="" width="1600" height="900" loading="lazy" decoding="async"></div>
+      <div class="band__row">
+        <figure class="band__item" data-parallax-layer data-speed="0.9">
+          <img src="assets/img/gal-1.webp" alt="Vrienden op een zomerfeest, lachend in de camera" width="900" height="599" loading="lazy" decoding="async">
+          <figcaption>Vrienden, tuinfeest</figcaption>
+        </figure>
+        <figure class="band__item" data-parallax-layer data-speed="1.35">
+          <img src="assets/img/gal-2.webp" alt="De houten photobooth in het gras met gasten ervoor" width="560" height="1229" loading="lazy" decoding="async">
+          <figcaption>De kast, buiten opgesteld</figcaption>
+        </figure>
+        <figure class="band__item" data-parallax-layer data-speed="0.7">
+          <img src="assets/img/gal-3.webp" alt="De statiefbooth met ringlamp, klaar voor gebruik" width="480" height="640" loading="lazy" decoding="async">
+          <figcaption>De statiefbooth, binnenshuis</figcaption>
+        </figure>
+        <figure class="band__item" aria-hidden="true">
+          <img src="assets/img/prints-in-hand.webp" alt="" width="560" height="933" loading="lazy" decoding="async">
+          <figcaption>De prints, meteen mee</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="wrap morning__facts" data-stagger>
+      <div class="morning__fact"><b>Onbeperkt</b><span>Printen zolang het feest duurt, zonder teller.</span></div>
+      <div class="morning__fact"><b>Apart per evenement</b><span>De galerij staat per feest op zichzelf, niet in één grote stapel.</span></div>
+      <div class="morning__fact"><b>Ook als boomerang</b><span>Van een fotomoment kan een bewegend beeld gemaakt worden — een extra optie.</span></div>
+    </div>
+  </section>
+
+  <!-- ======== scène 6 — gala's, privacy en vragen (proof) ============ -->
+  <section class="gala" id="vragen">
+    <div class="gala__bg" aria-hidden="true"><img src="assets/gen/curtain.webp" alt="" width="1600" height="900" loading="lazy" decoding="async"></div>
+    <div class="wrap">
+      <div class="gala__grid">
+        <div class="gala__note" data-reveal>
+          <p class="label">Privacy</p>
+          <h2>Voor gala's waar het gordijn dicht mag.</h2>
+        </div>
+        <div class="gala__body" data-reveal>
+          <p>De volledige booth — een staande kast met een zitgedeelte dat met een gordijn wordt afgesloten — is in de maak. Daarin passen ongeveer vier mensen die zich even helemaal losmaken van de rest van het feest.</p>
+          <p>Tot die optie er is, zetten we de kast of de statiefbooth neer. De kast heeft ruimte nodig zodat gasten naar achteren kunnen staan — hoe verder ze achteruit staan, hoe meer mensen er op de foto passen. De statiefbooth past juist op een kleine plek. Bij de aanvraag kijken we samen wat het beste werkt, ook als het feest op een hoge etage is.</p>
+        </div>
+      </div>
+
+      <div class="faq" data-stagger>
+        <details>
+          <summary>Hoeveel ruimte hebben jullie nodig?</summary>
+          <div class="faq__answer"><p>De statiefbooth past op een plek waar weinig ruimte is. De kast heeft iets meer ruimte nodig, omdat gasten naar achteren kunnen staan: hoe verder ze achteruit staan, hoe meer mensen er op de foto passen. Bij de aanvraag kijken we naar de locatie.</p></div>
+        </details>
+        <details>
+          <summary>Kunnen er de hele avond prints gemaakt worden?</summary>
+          <div class="faq__answer"><p>Ja. Bij de huur hoort onbeperkt printen gedurende je hele evenement. Wil je liever dat gasten per foto een kleine bijdrage doen, dan betaal je vooraf een kleiner bedrag.</p></div>
+        </details>
+        <details>
+          <summary>Kunnen we ons eigen ontwerp aanleveren?</summary>
+          <div class="faq__answer"><p>Ja. Logo's, thema's en sponsoring kunnen op de strip. Je kiest ook zelf hoeveel foto's er op een strip staan en in welk formaat.</p></div>
+        </details>
+        <details>
+          <summary>Hoe krijgen we de foto's terug?</summary>
+          <div class="faq__answer"><p>Per evenement apart opgeslagen en na afloop digitaal naar je toegestuurd, in originele kwaliteit. Van een fotomoment kan ook een boomerang of GIF gemaakt worden.</p></div>
+        </details>
+        <details>
+          <summary>Kan de booth ook op een hoge etage staan?</summary>
+          <div class="faq__answer"><p>Door de stevige kast kunnen we ook op hoge etages terecht. Geef bij de aanvraag door op welke verdieping het feest is, dan stemmen we de opstelling daarop af.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= scène 7 — vraag een datum aan (de deur) ============ -->
+  <section class="door" id="contact">
+    <div class="door__bg" aria-hidden="true"><img src="assets/gen/curtain.webp" alt="" width="1600" height="900" loading="lazy" decoding="async"></div>
+    <div class="wrap-narrow door__inner">
+      <div class="door__head">
+        <h2 data-reveal>Vraag een datum aan.</h2>
+        <p data-reveal>Vertel ons de datum, de locatie en het soort feest. We laten je weten of die datum nog vrij is.</p>
+      </div>
+
+      <form class="form" id="aanvraag" novalidate>
+        <div class="field">
+          <label for="naam">Naam</label>
+          <input id="naam" name="naam" type="text" autocomplete="name" required placeholder="Voor- en achternaam">
+          <p class="field__error" data-error-for="naam" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required placeholder="naam@voorbeeld.nl">
+          <p class="field__error" data-error-for="email" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="datum">Datum van het feest</label>
+          <input id="datum" name="datum" type="date" required>
+          <p class="field__error" data-error-for="datum" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="locatie">Locatie</label>
+          <input id="locatie" name="locatie" type="text" required placeholder="Plaats of zaal">
+          <p class="field__error" data-error-for="locatie" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="soort">Soort feest</label>
+          <select id="soort" name="soort" required>
+            <option value="">Kies een optie</option>
+            <option>Studentenfeest of gala</option>
+            <option>Bruiloft</option>
+            <option>Bedrijfsfeest</option>
+            <option>Verjaardag of jubileum</option>
+            <option>Anders</option>
+          </select>
+          <p class="field__error" data-error-for="soort" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="uitvoering">Gewenste uitvoering</label>
+          <select id="uitvoering" name="uitvoering">
+            <option value="">Weet ik nog niet</option>
+            <option>De kast (vanaf €450,-)</option>
+            <option>Het hokje — coming soon (vanaf €550,-)</option>
+            <option>Op statief (vanaf €325,-)</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="bericht">Vertel kort over het feest</label>
+          <textarea id="bericht" name="bericht" placeholder="Aantal gasten, binnen of buiten, gewenste opbouwtijd, bijzonderheden"></textarea>
+        </div>
+        <div class="form__actions field--wide">
+          <button class="btn btn--night" type="submit">Verstuur aanvraag</button>
+          <p class="form__status" id="form-status" role="status"></p>
+        </div>
+      </form>
+
+      <div class="door__direct">
+        <div><p class="label">E-mail</p><a href="mailto:info@clyckphotobooths.nl">info@clyckphotobooths.nl</a></div>
+        <div><p class="label">Telefoon</p><a href="tel:+31612345678">+31 6 1234 5678</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__col">
+        <p class="foot__logo"><img src="assets/logo/clyck-white.webp" alt="CLYCK Photobooths" width="340" height="137"></p>
+        <p>Photobooths voor studentenfeesten, bruiloften en bedrijfsfeesten. Onbeperkt printen, strips in jouw ontwerp, alle foto's na afloop online.</p>
+      </div>
+      <div class="foot__col">
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="mailto:info@clyckphotobooths.nl">info@clyckphotobooths.nl</a></li>
+          <li><a href="tel:+31612345678">+31 6 1234 5678</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Op deze pagina</h3>
+        <ul>
+          <li><a href="#zo-werkt-het">Zo werkt het</a></li>
+          <li><a href="#opties">De drie opties</a></li>
+          <li><a href="#fotos">Foto's</a></li>
+          <li><a href="#vragen">Veelgestelde vragen</a></li>
+          <li><a href="#contact">Datum aanvragen</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Regelen</h3>
+        <ul>
+          <li><a href="#contact">Aanvraagformulier</a></li>
+          <!-- VERVANGEN: KvK-nummer, btw-nummer en de juridische pagina's -->
+          <li><a href="#contact">Algemene voorwaarden</a></li>
+          <li><a href="#contact">Privacyverklaring</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__legal">
+      <p>© <span class="num">2026</span> CLYCK Photobooths</p>
+      <p>Gemaakt voor studentenfeesten, bruiloften en bedrijfsfeesten</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
