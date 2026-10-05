@@ -1,0 +1,8 @@
+# Internal design work and generated review exports
+/design/
+
+# Design source files kept outside the design folder
+*.fig
+*.figma
+*.sketch
+*.xd
