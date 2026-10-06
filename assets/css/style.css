@@ -119,6 +119,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   background: var(--ink); color: var(--paper); padding: 0.7rem 1.1rem;
 }
 .skip:focus { left: var(--gutter); top: var(--s-2); }
+.icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 /* grain: one fixed, non-animating pass, and no mix-blend-mode — a full-viewport
    blend is a whole-frame pass on every painted frame (measured: ~20 fps at 4x CPU). */
@@ -579,7 +580,52 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .door__direct { grid-template-columns: repeat(2, auto); justify-content: center; gap: var(--s-6); }
 }
 
-/* --- 12. footer --------------------------------------------------------- */
+/* --- 12. scene 8 — volg ons (social) ------------------------------------ */
+.icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.social { padding-block: clamp(3.5rem, 8vw, 7rem); background: var(--paper-2); }
+.social__grid { display: grid; gap: var(--s-6); grid-template-columns: 1fr; align-items: center; }
+.social__copy h2 { font-size: var(--step-3); max-width: 24ch; margin-top: var(--s-3); }
+.social__copy .prose { margin-top: var(--s-3); color: var(--ink-2); max-width: 44ch; }
+.social__links { list-style: none; margin: var(--s-5) 0 0; padding: 0; display: grid; gap: var(--s-2); }
+.social__link {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3); border: 1px solid var(--hairline-strong); background: var(--paper);
+  color: var(--ink); text-decoration: none;
+  transition: border-color 160ms var(--ease-out-quart), background-color 160ms var(--ease-out-quart);
+}
+.social__icon { flex: 0 0 auto; display: inline-flex; color: var(--safelight); }
+.social__icon svg { width: 26px; height: 26px; }
+.social__meta { display: grid; gap: 0.12rem; min-width: 0; }
+.social__meta b { font-family: var(--display); font-weight: 700; font-stretch: 108%; font-size: var(--step-0); }
+.social__meta small { color: var(--ink-2); font-size: var(--step--1); }
+
+.social__post { display: block; width: min(28rem, 100%); justify-self: center; color: inherit; text-decoration: none; }
+.social__post figure { margin: 0; }
+.social__shot {
+  display: block; padding: 0.6rem; border: 1px solid var(--hairline-strong);
+  background: var(--print); transition: border-color 160ms var(--ease-out-quart);
+}
+.social__shot img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.social__bar { display: flex; align-items: center; gap: var(--s-2); margin-top: var(--s-2); }
+.social__avatar {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hairline-strong);
+  background: var(--paper); color: var(--ink);
+}
+.social__avatar svg { width: 17px; height: 17px; }
+.social__handle { display: grid; gap: 0.12rem; }
+.social__handle b { font-family: var(--display); font-weight: 700; font-stretch: 108%; }
+.social__handle small { color: var(--ink-2); font-size: var(--step--1); }
+@media (hover: hover) and (pointer: fine) {
+  .social__link:hover { border-color: var(--ink); background: var(--paper-2); }
+  .social__post:hover .social__shot { border-color: var(--ink); }
+}
+@media (min-width: 900px) {
+  .social__grid { grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6rem); }
+}
+
+/* --- 13. footer --------------------------------------------------------- */
 .foot { background: var(--night); color: var(--print); padding-block: clamp(3rem, 7vw, 5.5rem) var(--s-4); }
 .foot__grid { display: grid; gap: var(--s-5); grid-template-columns: 1fr; }
 .foot__logo img { width: 150px; height: auto; }
@@ -596,15 +642,26 @@ button, input, select, textarea { font: inherit; color: inherit; }
   font-family: var(--display); font-size: var(--step--1); color: oklch(0.97 0.004 30 / 0.6);
 }
 @media (min-width: 820px) { .foot__grid { grid-template-columns: 1.2fr 1fr 1fr 1fr; } }
+.foot__col .foot__social {
+  list-style: none; margin: var(--s-3) 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-3);
+}
+.foot__col .foot__social a {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  color: oklch(0.97 0.004 30 / 0.88); text-decoration: none; font-size: 0.98em;
+}
+.foot__col .foot__social a:hover { text-decoration: underline; }
+.foot__social-i { display: inline-flex; color: oklch(0.97 0.004 30 / 0.72); }
+.foot__social-i svg { width: 18px; height: 18px; }
 
-/* --- 13. entrance system (JS adds .js on <html>; without it, all visible) */
+/* --- 14. entrance system (JS adds .js on <html>; without it, all visible) */
 .js [data-reveal] { opacity: 0; }
 .js [data-reveal-img] { transform: scale(1.045); }
 .js [data-reveal-mask] > * { transform: translateY(105%); }
 .js [data-reveal-mask] { overflow: hidden; }
 .js [data-reveal-wipe] { clip-path: inset(0 100% 0 0); }
 
-/* --- 14. no-JS and reduced motion: the static cut of the same film ------- */
+/* --- 15. no-JS and reduced motion: the static cut of the same film ------- */
 .no-js .print { height: auto; }
 .no-js .print__sticky { position: static; height: auto; padding-block: var(--s-6); }
 .no-js .print__stage { grid-template-rows: auto auto; }
